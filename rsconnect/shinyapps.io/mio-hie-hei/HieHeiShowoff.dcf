@@ -1,0 +1,13 @@
+name: HieHeiShowoff
+title: HieHeiShowoff
+username:
+account: mio-hie-hei
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4993928
+bundleId: 5729183
+url: https://mio-hie-hei.shinyapps.io/HieHeiShowoff/
+when: 1648269034.56241
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: 05-staedte.xlsx|analysis_geocoding.R|schools_df_coded.csv|schulen_nrw.csv|schulen_nrw.dbf|Classification Accuracy

@@ -1,0 +1,31 @@
+<html>
+
+<head>
+<title></title>
+</head>
+
+<body>
+  <h3>How to use machine learning for political questions</h3>
+<p>
+  I want to demonstrate how polarised the two largest German parties, the SPD and the CDU/ CSU have been in the years since German reunification 1990. I will follow an approach by 
+  <a href = 'https://www.cambridge.org/core/services/aop-cambridge-core/content/view/45746D999CFCD1CB43E362392D7B2FB4/S1047198717000390a.pdf/classification_accuracy_as_a_substantive_quantity_of_interest_measuring_polarization_in_westminster_systems.pdf'> Peterson and Sperling (2018)
+  </a>
+to capture polarisation as the classification accuracy of a machine learning algorithm that tries to differentiate a legislative speech based on the party of the speaker. The idea is that higher polarisation will yield more different speeches and thus a higher accuracy of the classification.
+</p>
+<p>
+  I use the 
+  <a href='https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/L4OAKN'>ParlSpeech dataset by Rauh and Schwalbach (2020),
+  </a>
+  which contains a large amount of legislative speeches by German MPs over various previous legislative periods. I will show how polarisation levels have been changing over time by showing the accuracy with which a SVM classifier can predict the party of a speaker of a speech in the German Bundestag.
+  </p>
+<p>
+  Classification accuracy (CA) is the share of correctly predicted groups by an algorithm that tries to differentiate between groups."
+</p>
+<p>
+  Just like a COVID-19 test, which you can evaluate by asking how often a test can correctly say when a person is infected or when he or she is not, CA regarding legislative speeches can tell us how often a classifier correclty predicts the party belonging to a speech. The more different speeches are, the easier it is for a classifier. And thus, the more different parties are.
+</p>
+<p>
+  Which is when we arrive at the matter of polarisation. But check for yourself.
+</p>
+</body>
+</html>
