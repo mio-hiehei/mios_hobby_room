@@ -16,7 +16,6 @@ library(plotly)
 library(shinythemes)
 library(shinyjs)
 
-# setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 ## Surname length and productivity
 
@@ -120,7 +119,6 @@ df_merged <- df_ca
 ## Schools in NRW
 
 
-# setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 # 
 # schools_nrw_df <- read_csv("schulen_nrw.csv")
 # 

@@ -1,8 +1,6 @@
 ## This file generates data on the surname analysis on the first tab.
 
 
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-
 n <- sample(c(400:800), 1)
 
 gender <- sample(c("male", "female"), n, replace = TRUE)
