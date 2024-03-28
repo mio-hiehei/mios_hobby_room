@@ -20,11 +20,11 @@ library(shinyjs)
 
 ## Surname length and productivity
 
-source("generate_surname_data.R")
+source("source/generate_surname_data.R")
 
 ## classification accuracy of german volksparteien
 
-df_ca <- read_csv2("accuracy_spdcdu.csv") %>%
+df_ca <- read_csv2("data/accuracy_spdcdu.csv") %>%
   mutate(Year = str_extract(yearMo , "\\d{4}"),
          Quarter = str_extract(yearMo, "(?<=\\d{4}).+"),
          Month = case_when(Quarter == 1  ~ "01",
@@ -57,57 +57,65 @@ df_ca <- df_ca %>%
   mutate(start_date = as_date(start_date),
          end_date = as_date(end_date)) %>%
   group_by(yearMo) %>%
-  mutate(date = list(seq(from = start_date, to = end_date, by = 1)), created_at = NULL) %>%
-  unnest(cols = c(date))
+  mutate(date = list(seq(from = first(start_date), to = first(end_date), by = 1)),
+         created_at = NULL)
+  # mutate(date = list(seq(from = start_date, to = end_date, by = 1)), created_at = NULL) %>%
+  # unnest(cols = c(date))
 
 
-
-parlgov_elections <- read_csv("view_election.csv") %>%
-  filter(country_name_short == "DEU" & election_date >= "1990-12-02" & party_name_short %in% c("CDU", "CSU", "SPD") & election_type == "parliament") %>%
-  dplyr::select(election_date, vote_share, seats, party_name_short, left_right, election_id) %>%
-   left_join(x = ., y = dplyr::select(read_csv("https://www.parlgov.org/data/parlgov-development_csv-utf-8/view_cabinet.csv"),  cabinet_name, election_id), by = "election_id") %>%
-   distinct() %>%
-  gather(variable, value, vote_share, seats, left_right) %>%
-  unite(temp, party_name_short, variable) %>%
-  spread(temp, value) %>%
-  mutate(Union_left_right = CDU_left_right * (CDU_vote_share / (CDU_vote_share + CSU_vote_share) ) + CSU_left_right * ( CSU_vote_share / (CSU_vote_share + CDU_vote_share)),
-         Union_seats = CDU_seats + CSU_seats,
-         Union_vote_share = CDU_vote_share + CSU_vote_share) %>%
-  dplyr::select(-(CDU_left_right:CSU_vote_share)) %>%
-  rename(date = election_date) %>%
-  filter(cabinet_name != "Merkel V") %>%
-  rename(start_date = date) %>%
-  mutate(end_date = NA)
-
-# create end_date of row
-
-for(row in 1:nrow(parlgov_elections)){
-  
-  
-  if(row != nrow(parlgov_elections)){
-    parlgov_elections$end_date[row] <- as_date(parlgov_elections$start_date[row + 1] - 1,
-                                               origin = "1970-01-01")
-    
-  } else {
-    
-    parlgov_elections$end_date[row] <- max(df_ca$date)
-    
-  }
-  
-}
-
-parlgov_dates <- parlgov_elections %>%
-  mutate(start_date = as_date(start_date),
-         end_date = as_date(end_date)) %>%
-  group_by(cabinet_name) %>%
-  filter(start_date != end_date) %>%
-  mutate(date = list(seq(from = start_date, to = end_date, by = 1)), created_at = NULL) %>%
-  unnest(cols = c(date))
-
-df_merged <- left_join(df_ca, parlgov_dates, by = "date") %>%
-  dplyr::select(yearMo, accuracy_list, date, start_date.y, cabinet_name:Union_vote_share) %>%
-  rename(election_date = start_date.y) %>%
-  ungroup()
+# cabinet data not available atm 
+# parlgov_elections <- read_csv("data/view_election.csv") %>%
+#   filter(country_name_short == "DEU" & election_date >= "1990-12-02" & party_name_short %in% c("CDU", "CSU", "SPD") & election_type == "parliament") %>%
+#   dplyr::select(election_date, vote_share, seats, party_name_short, left_right, election_id)
+# 
+# cabinets_df <- read_csv("") |>
+#   dplyr::select(cabinet_name, election_id)
+# 
+# parlgov_elections %>%
+#    left_join(x = ., y = cabinets_df, by = "election_id") %>%
+#    distinct() %>%
+#   gather(variable, value, vote_share, seats, left_right) %>%
+#   unite(temp, party_name_short, variable) %>%
+#   spread(temp, value) %>%
+#   mutate(Union_left_right = CDU_left_right * (CDU_vote_share / (CDU_vote_share + CSU_vote_share) ) + CSU_left_right * ( CSU_vote_share / (CSU_vote_share + CDU_vote_share)),
+#          Union_seats = CDU_seats + CSU_seats,
+#          Union_vote_share = CDU_vote_share + CSU_vote_share) %>%
+#   dplyr::select(-(CDU_left_right:CSU_vote_share)) %>%
+#   rename(date = election_date) %>%
+#   filter(cabinet_name != "Merkel V") %>%
+#   rename(start_date = date) %>%
+#   mutate(end_date = NA)
+# 
+# # create end_date of row
+# 
+# for(row in 1:nrow(parlgov_elections)){
+#   
+#   
+#   if(row != nrow(parlgov_elections)){
+#     parlgov_elections$end_date[row] <- as_date(parlgov_elections$start_date[row + 1] - 1,
+#                                                origin = "1970-01-01")
+#     
+#   } else {
+#     
+#     parlgov_elections$end_date[row] <- max(df_ca$date)
+#     
+#   }
+#   
+# }
+# 
+# parlgov_dates <- parlgov_elections %>%
+#   mutate(start_date = as_date(start_date),
+#          end_date = as_date(end_date)) %>%
+#   group_by(cabinet_name) %>%
+#   filter(start_date != end_date) %>%
+#   mutate(date = list(seq(from = start_date, to = end_date, by = 1)), created_at = NULL) %>%
+#   unnest(cols = c(date))
+# 
+# df_merged <- left_join(df_ca, parlgov_dates, by = "date") %>%
+#   dplyr::select(yearMo, accuracy_list, date, start_date.y, cabinet_name:Union_vote_share) %>%
+#   rename(election_date = start_date.y) %>%
+#   ungroup()
+df_merged <- df_ca
 
 ## Schools in NRW
 
@@ -198,7 +206,7 @@ df_merged <- left_join(df_ca, parlgov_dates, by = "date") %>%
 # write_csv2(schools_df_omitted, "C:/Users/miohi/Documents/Github/HieHei_Showoff_Dashboard/HieHeiShowoff/schools_df_ommited.csv")
 
 
-schools_df_omitted <- read_csv2("schools_df_ommited.csv") %>%
+schools_df_omitted <- read_csv2("data/schools_df_ommited.csv") %>%
   mutate(SCHULFORM = ifelse(grepl("rderschule", SCHULFORM), "Förderschule", SCHULFORM))
 
 

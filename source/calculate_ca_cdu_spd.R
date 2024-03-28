@@ -10,7 +10,7 @@ library(caret)
 
 setwd(dirname(getActiveDocumentContext()$path))
 
-df_speeches <- read_rds("Corp_Bundestag_V2.rds")
+df_speeches <- read_rds("data/Corp_Bundestag_V2.rds")
 
 df_speeches <- df_speeches %>%
   filter(party %in% c("SPD", "CDU/CSU") & chair == FALSE) %>%
@@ -303,11 +303,6 @@ classify_fun <- function(dfm, train_size,
   return(accuracy)
 }
 
-save.image("sq.RData")
-
-load("sq.RData")
-
-
 
 accuracy_list <- sapply(list_yearModfm_propmax, classify_fun,
                         train_size = 0.8,
@@ -317,4 +312,4 @@ accuracy_list <- sapply(list_yearModfm_propmax, classify_fun,
 df_accuracy <- cbind.data.frame(accuracy_list,
                                 yearMo)
 
-write_csv2(df_accuracy, "accuracy_spdcdu_year.csv")
+write_csv2(df_accuracy, "data/accuracy_spdcdu_year.csv")

@@ -62,12 +62,12 @@ ols_qoi_sim <- function(X,
   
 }
 
-ggplot(data = scen_df,
-       aes(x = scenario,
-           ymin = lwr,
-           ymax = upr))+
-  geom_errorbar()+
-  geom_point(data = df,
-             aes_string(x = paste0("`", name_var1, "`"),
-                        "`Productivity Index`"))
+# ggplot(data = scen_df,
+#        aes(x = scenario,
+#            ymin = lwr,
+#            ymax = upr))+
+#   geom_errorbar()+
+#   geom_point(data = df,
+#              aes_string(x = paste0("`", name_var1, "`"),
+#                         "`Productivity Index`"))
 

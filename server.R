@@ -47,7 +47,7 @@ shinyServer(function(input, output, session) {
 
     
     output$downloadcv <- downloadHandler(
-        filename = "CV_Hie-Hei_german.pdf",
+        filename = "CV_Hie-Hei.pdf",
         content = function(file) {
             file.copy("www/CV_Mio_Hienstorfer_Heitmann.pdf", file)
         }
@@ -230,17 +230,23 @@ shinyServer(function(input, output, session) {
     output$plot_ca <- renderDygraph({
         
         
-        dy_data <- filter_ca() %>% select(accuracy_list, SPD_vote_share, Union_vote_share) %>%
-            mutate(accuracy_list = accuracy_list * 100)
+        dy_data <- filter_ca() %>% select(
+          accuracy_list
+          #,SPD_vote_share, 
+          #Union_vote_share
+          ) 
+          # %>% mutate(accuracy_list = accuracy_list * 100)
         
         dy_data <- xts(dy_data, order.by= filter_ca()$date)
         
         dygraph(dy_data, main = "Polarisation between Union and SPD") %>%
             dySeries("accuracy_list", label = "Polarisation") %>%
-            dySeries("SPD_vote_share", label = "Votes SPD", color = "red") %>%
-            dySeries("Union_vote_share", label = "Votes CDU", color = "orange") %>%
-            dyAxis("y", label = "Percent") %>%
-            dyEvent(unique(filter_ca()$election_date), unique(filter_ca()$cabinet_name), labelLoc = "bottom")
+            #dySeries("SPD_vote_share", label = "Votes SPD", color = "red") %>%
+            #dySeries("Union_vote_share", label = "Votes CDU", color = "orange") %>%
+            dyAxis("y", label = "Percent")
+            # %>% dyEvent(unique(filter_ca()$election_date), 
+            #        unique(filter_ca()$cabinet_name), 
+            #        labelLoc = "bottom")
 
         # plot <- ggplot(data = filter_ca(),
         #        aes(x = date,

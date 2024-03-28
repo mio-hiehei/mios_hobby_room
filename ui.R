@@ -8,7 +8,7 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(theme = shinytheme("lumen"),
-                  tags$script("scrollback_function.js"),
+                  tags$script("source/scrollback_function.js"),
                   #theme = "css_layout.css",
                   # https://rstudio.github.io/shinythemes/
                   withMathJax(),

@@ -63,7 +63,7 @@ X <- cbind(Intercept = 1,
 
 y <- plot_data$`Productivity Index`
 
-source("ols_regression.R")
+source("source/ols_regression.R")
 
 model <- ols_function(X = X, y = y)
 
@@ -71,7 +71,7 @@ reg_data <- model$reg_out
 
 rownames(reg_data) <- NULL
 
-source("ols_qoi_sim.R")
+source("source/ols_qoi_sim.R")
 
 
 
