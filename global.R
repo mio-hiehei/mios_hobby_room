@@ -57,10 +57,10 @@ df_ca <- df_ca %>%
   mutate(start_date = as_date(start_date),
          end_date = as_date(end_date)) %>%
   group_by(yearMo) %>%
-  mutate(date = list(seq(from = first(start_date), to = first(end_date), by = 1)),
-         created_at = NULL)
-  # mutate(date = list(seq(from = start_date, to = end_date, by = 1)), created_at = NULL) %>%
-  # unnest(cols = c(date))
+  #mutate(date = list(seq(from = first(start_date), to = first(end_date), by = 1)),
+  #       created_at = NULL)
+  mutate(date = list(seq(from = start_date, to = end_date, by = 1)), created_at = NULL) %>%
+  unnest(cols = c(date))
 
 
 # cabinet data not available atm 

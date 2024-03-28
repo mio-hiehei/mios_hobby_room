@@ -230,7 +230,9 @@ shinyServer(function(input, output, session) {
     output$plot_ca <- renderDygraph({
         
         
-        dy_data <- filter_ca() %>% select(
+        dy_data <- filter_ca() %>%
+          ungroup() %>%
+          dplyr::select(
           accuracy_list
           #,SPD_vote_share, 
           #Union_vote_share
@@ -244,7 +246,7 @@ shinyServer(function(input, output, session) {
             #dySeries("SPD_vote_share", label = "Votes SPD", color = "red") %>%
             #dySeries("Union_vote_share", label = "Votes CDU", color = "orange") %>%
             dyAxis("y", label = "Percent")
-            # %>% dyEvent(unique(filter_ca()$election_date), 
+            #%>% dyEvent(unique(filter_ca()$election_date), 
             #        unique(filter_ca()$cabinet_name), 
             #        labelLoc = "bottom")
 

@@ -86,14 +86,14 @@ shinyUI(fluidPage(theme = shinytheme("lumen"),
                      
                      br(),
                      
-                     includeHTML("www/surname_details_html.html"),
+                     tags$iframe("www/surname_details_html.html"),
                      
                      br(),
                      
                      tableOutput("surname_var_desc_table"),
                      
                      
-                     includeHTML("www/surname_details_regression.html"),
+                     tags$iframe("www/surname_details_regression.html"),
                      
                      br(),
                      
@@ -133,7 +133,7 @@ shinyUI(fluidPage(theme = shinytheme("lumen"),
                  
                  br(),
                  
-                 includeHTML("www/ca_text.html"),
+                 tags$iframe("www/ca_text.html"),
                  
                  br(),
                  br(),
