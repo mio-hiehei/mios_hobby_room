@@ -1,11 +1,11 @@
 library(tidyverse)
 library(lubridate)
-library(quanteda)
+#library(quanteda)
 library(rstudioapi)
-library(ngram)
-library(tm)
-library(randomForest)
-library(caret)
+#library(ngram)
+#library(tm)
+#library(randomForest)
+#library(caret)
 
 
 setwd(dirname(getActiveDocumentContext()$path))
